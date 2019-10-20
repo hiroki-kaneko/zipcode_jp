@@ -9,11 +9,6 @@ void main() {
       awesome = ConvToAddressByJpZip();
     });
 
-    test('that it returnes 7 digits address', () async {
-      var value = await awesome.getAddressByZipCode("2510015");
-      expect(value, equals("神奈川県藤沢市川名"));
-    });
-
     test('87で始まる郵便番号は福岡県と大分県のCSVを読むcase1', () async {
       var value = await awesome.getAddressByZipCode("8710822");
       expect(value, equals("福岡県築上郡吉富町今吉"));

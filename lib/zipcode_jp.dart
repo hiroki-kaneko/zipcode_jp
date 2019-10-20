@@ -31,7 +31,7 @@ enum ZipCol {
   updateReason // 変更理由
 }
 
-///
+/// 7桁の郵便番号データに対応する住所を返す
 class ConvToAddressByJpZip {
   // zip code file for each prefs
   final pref = [
