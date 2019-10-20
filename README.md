@@ -23,15 +23,28 @@ A simple usage example:
 import 'package:zipcode_jp/zipcode_jp.dart';
 
 main() {
-  var awesome = new Awesome();
+  var zipJp = new ConvToAddressByJpZip();
+  var result = zipJp.getAddressByZipCode("0200802"); // 7 digits
+  print(result); // => "岩手県盛岡市つつじが丘"
 }
 ```
+
+## Using Libraries and Data
+```
+dependencies:
+  csv: ^4.0.3
+  archive: ^2.0.10
+```
+
+The postal code data saved by this project uses a database published by Japan Post.
+
+[Japan Post]: https://www.post.japanpost.jp/zipcode/dl/kogaki-zip.html
 
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: http://example.com/issues/replaceme
+[tracker]: https://github.com/hiroki-kaneko/zipcode_jp/issues
 
 ## License
 MIT
@@ -40,7 +53,7 @@ MIT
 Hiroki Kaneko <kaneko.hiroki@gmail.com>
 
 ## Homepage
-Nothing for now.
+https://github.com/hiroki-kaneko/zipcode_jp
 
 ## Version
 0.1
