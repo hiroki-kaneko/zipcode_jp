@@ -38,5 +38,14 @@ void main() {
       var value = awesome.getDuplicatePrefCodes("3800000");
       expect(value, equals([15, 10, 11]));
     });
+
+    test('5桁はエラー', () async {
+      expect(awesome.getAddressByZipCode("83914"), throwsA(TypeMatcher<ArgumentError>()));
+    });
+
+    test('対応する住所が見つからない', () async {
+      expect(awesome.getAddressByZipCode("0000000"), throwsA(TypeMatcher<Exception>()));
+    });
+
   });
 }

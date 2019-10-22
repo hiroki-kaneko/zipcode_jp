@@ -17,12 +17,12 @@ enum ZipCol {
   localGovCode, // 全国地方公共団体コード（JIS X0401、X0402）
   oldZipCode, //（旧）郵便番号（5桁）
   zipCode, // 郵便番号（7桁）
-  prefNameKana, // 都道府県名
-  cityNameKana, // 市区町村名
-  townNameKana, // 町域名
-  prefNameKanji, // 都道府県名
-  cityNameKanji, // 市区町村名
-  townNameKanji, // 町域名
+  prefKn, // 都道府県名
+  cityKn, // 市区町村名
+  townKn, // 町域名
+  prefKj, // 都道府県名
+  cityKj, // 市区町村名
+  townKj, // 町域名
   dupCode, // 一町域が二以上の郵便番号で表される場合の表示
   oazaHasSomeKoazas, // 小字毎に番地が起番されている町域の表示
   cityBlock, // 丁目を有する町域の場合の表示
@@ -86,7 +86,11 @@ class ConvToAddressByJpZip {
 
   /// giving 7 digits zip code then returns address
   Future<String> getAddressByZipCode(String zipCode) async {
-    var result;
+
+    if (zipCode == null || zipCode == '' || zipCode.length < 7) {
+      throw ArgumentError('The postal code must be 7 digits');
+    }
+    var result = '';
     var pref;
     var zipCodeList = getDuplicatePrefCodes(zipCode);
     if (zipCodeList.isEmpty) {
@@ -110,14 +114,17 @@ class ConvToAddressByJpZip {
 
       for (var col in fields) {
         if (col[ZipCol.zipCode.index] == zipCode) {
-          result = col[ZipCol.prefNameKanji.index] +
-              col[ZipCol.cityNameKanji.index] +
-              col[ZipCol.townNameKanji.index];
+          result = col[ZipCol.prefKj.index] +
+              col[ZipCol.cityKj.index] +
+              col[ZipCol.townKj.index];
           break;
         }
       }
       fields.clear();
       Directory('out/' + fileName)..deleteSync(recursive: true);
+    }
+    if (result == '') {
+      throw Exception('The address corresponding to the postal code could not be found: ' + zipCode);
     }
     return result;
   }
